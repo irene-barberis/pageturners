@@ -1,4 +1,4 @@
-# Page Turners – Analysis Notes
+# Page Turners – Analysis notes
 ## 1. Dataset exploration 
 ### 1.1 Books dataset (`books.csv`)
 

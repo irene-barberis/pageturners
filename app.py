@@ -126,7 +126,6 @@ elif page == "Popularity & Ratings":
         """
     )
 
-    
 
 # Page 3: Rating distributions
 elif page == "Rating distributions":

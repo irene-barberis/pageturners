@@ -94,9 +94,9 @@ plt.bar(
     overall_percentages.values
 )
 
-plt.title("Overall Distribution of Star Ratings")
-plt.xlabel("Star Rating")
-plt.ylabel("Percentage of Ratings (%)")
+plt.title("Overall distribution of star ratings")
+plt.xlabel("Star rating")
+plt.ylabel("Percentage of ratings (%)")
 plt.xticks(stars)
 plt.ylim(0, 100)
 

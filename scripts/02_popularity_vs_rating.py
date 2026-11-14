@@ -32,9 +32,9 @@ plt.scatter(
 )
 
 plt.xscale("log")
-plt.title("Popularity vs Average Rating")
-plt.xlabel("Number of Ratings (log scale)")
-plt.ylabel("Average Rating")
+plt.title("Popularity vs average rating")
+plt.xlabel("Number of ratings (log scale)")
+plt.ylabel("Average rating")
 
 plt.savefig(
     "figures/popularity_vs_rating.png",
