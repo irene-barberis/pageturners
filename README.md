@@ -76,7 +76,8 @@ Download the original CSV files from the [Goodbooks-10k repository](https://gith
 `data/raw (dati_grezzi)/`
 
 The original datasets are excluded from version control due to their size.
-The Streamlit application uses a separate, preprocessed dataset (`data/books_for_app.csv`)
+The Streamlit application uses a separate, preprocessed dataset (`data/books_for_app.csv`).
+
 
 Install the required Python libraries:
 ```bash

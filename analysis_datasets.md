@@ -394,7 +394,64 @@ Positive evaluations dominate the dataset, with **73.31% of ratings receiving 4 
 However, rating distributions can vary across books, demonstrating that average ratings alone do not fully describe readers' evaluations.
 
 
-## RQ3 — Publication year
+## RQ3 — Do more active readers rate books differently?
+
+### Objective
+This analysis investigates whether users who rate more books tend to assign higher or lower average ratings.
+User activity is measured by the number of ratings recorded in the dataset, rather than the total number of books actually read.
+
+### Methodology
+The analysis uses `ratings.csv`, which contains user IDs, book IDs, and individual ratings.
+
+Ratings were grouped by `user_id` to calculate two metrics for each user:
+- **Number of ratings:** total number of ratings assigned by the user.
+- **Average rating:** mean rating assigned by the user.
+
+Descriptive statistics were calculated for both variables. Pearson and Spearman correlations were then used to examine the relationship between rating activity and average rating.
+
+Users were also divided into four activity groups using `pd.qcut()`: Low, Medium-low, Medium-high, and High.
+For each group, the number of users and the mean of individual users' average ratings were calculated.
+
+### Results
+The dataset contains **53,424 users**, with an average of approximately **112 ratings per user**.
+The mean of individual users' average ratings is approximately **3.93 stars**.
+
+**Correlation results:**
+- Pearson correlation: **-0.083**
+- Spearman correlation: **-0.099**
+Both coefficients indicate a very weak negative association between rating activity and average rating.
+
+**Average rating by user activity group:**
+| Activity group | Number of users | Mean rating |
+|---|---:|---:|
+| Low | 13,897 | 3.987 |
+| Medium-low | 13,535 | 3.934 |
+| Medium-high | 13,040 | 3.913 |
+| High | 12,952 | 3.876 |
+
+Average ratings decrease slightly as user activity increases. The difference between the least and most active groups is approximately **0.11 stars**.
+
+### Visualizations
+
+**1. User Rating Activity vs Average Rating**
+![User rating activity vs average rating](figures/reader_activity_vs_rating.png)
+
+The scatterplot shows no strong relationship between the number of ratings per user and their average rating. Users with similar activity levels can have substantially different average ratings.
+
+**2. Average rating by user activity group**
+![Average rating by user activity group](figures/average_rating_by_activity_group.png)
+
+The line chart highlights a gradual decrease in average ratings across activity groups. However, the overall difference is small, and the restricted y-axis range makes the trend more visually noticeable.
+
+### Conclusion
+- More active users tend to assign slightly lower average ratings, but the relationship is very weak.
+- Rating activity alone does not strongly explain differences in users' rating behavior.
+- These findings complement RQ2 by showing that, although ratings are generally positive, individual users differ in how they evaluate books.
+
+**Limitations:** Rating activity does not necessarily reflect the total number of books read. The analysis is descriptive, and the observed correlations do not imply causation.
+
+
+## RQ4 — Publication year
 
 **Research question:** Does a book's original publication year influence its average rating?
 

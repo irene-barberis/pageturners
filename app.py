@@ -1,4 +1,4 @@
-# Page Turners - Interactive Rating Distribution
+# Page Turners - Interactive rating distribution
 
 import streamlit as st
 import pandas as pd
@@ -27,6 +27,7 @@ page = st.sidebar.radio(
         "Overview",
         "Popularity & Ratings",
         "Rating distributions",
+        "Reader behavior",
         "Publication year"
     ]
 )
@@ -39,8 +40,9 @@ if page == "Overview":
 
     st.write(
         "An exploratory data analysis of the Goodbooks-10k dataset, "
-        "investigating how popularity, rating distributions, and "
-        "publication year relate to readers' evaluations."
+        "investigating how popularity, rating distributions, "
+        "reader behavior, and publication year relate to "
+        "readers' evaluations."
     )
 
     st.divider()
@@ -55,7 +57,7 @@ if page == "Overview":
 
     with col2:
         with st.container(border=True):
-            st.metric("Research questions", "3")
+            st.metric("Research questions", "4")
 
     with col3:
         with st.container(border=True):
@@ -66,7 +68,7 @@ if page == "Overview":
     st.divider()
     st.subheader("Research questions")
 
-    col1, col2, col3 = st.columns(3, gap="medium")
+    col1, col2, col3, col4 = st.columns(4, gap="medium")
 
     with col1:
         st.markdown("**01 — Popularity & Ratings**")
@@ -77,7 +79,11 @@ if page == "Overview":
         st.write("How do readers' rating distributions differ across books?")
 
     with col3:
-        st.markdown("**03 — Publication year**")
+        st.markdown("**03 — Reader behavior**")
+        st.write("Do more active readers rate books differently?")
+
+    with col4:
+        st.markdown("**04 — Publication year**")
         st.write("Does publication year influence average ratings?")
     
     
@@ -233,13 +239,120 @@ elif page == "Rating distributions":
     st.markdown("""
     **Conclusions**
 
-    Overall, 73,31% of ratings are 4 or 5 stars, indicating a predominance of positive evaluations. 
+    Overall, 73.31% of ratings are 4 or 5 stars, indicating a predominance of positive evaluations. 
     However, rating distributions vary across individual books, 
     showing that readers' opinions are not equally distributed across all titles.
     """)
 
     
-# Page 4: Publication year
+# Page 4: Reader behavior
+elif page == "Reader behavior":
+
+    st.title("Reader behavior")
+
+    st.write(
+        "Do more active readers rate books differently?"
+    )
+
+    st.divider()
+
+    # Display correlation coefficients
+    col1, col2 = st.columns(2)
+
+    with col1:
+        with st.container(border=True):
+            st.metric("Pearson correlation", "-0.083")
+
+    with col2:
+        with st.container(border=True):
+            st.metric("Spearman correlation", "-0.099")
+
+    st.caption(
+        "Both coefficients indicate a very weak negative association "
+        "between user rating activity and average rating."
+    )
+
+    st.divider()  
+    
+    
+    # Scatterplot: user activity vs average rating
+    st.subheader("User rating activity vs average rating")
+
+    st.write(
+        "Each point represents a user. The chart explores the "
+        "relationship between the number of ratings assigned "
+        "and the user's average rating."
+    )
+
+    col1, col2, col3 = st.columns([1, 5, 1])
+
+    with col2:
+        st.image(
+            "figures/reader_activity_vs_rating.png",
+            use_container_width=True
+        )
+
+    st.divider()
+    
+    
+    # Load activity group summary
+    activity_summary = pd.read_csv(
+        "data/reader_activity_summary.csv"
+    )
+
+# Display activity group summary
+    st.subheader("Activity group summary")
+    
+    st.dataframe(
+        activity_summary,
+        hide_index=True,
+        use_container_width=True
+    )
+
+    st.divider()
+
+    # Average rating by activity group
+    st.subheader("Average rating by user activity group")
+
+    st.write(
+        "Users are divided into four groups according to their "
+        "rating activity, from least active to most active."
+    )
+
+    col1, col2, col3 = st.columns([1, 5, 1])
+
+    with col2:
+        st.image(
+            "figures/average_rating_by_activity_group.png",
+            use_container_width=True
+        )
+
+    st.caption(
+        "The y-axis uses a restricted range to highlight small "
+        "differences between groups."
+    )
+    
+    st.divider()
+
+    # Conclusions
+    st.markdown("""
+    **Conclusions**
+
+    Both Pearson (-0.083) and Spearman (-0.099) correlations
+    indicate a very weak negative association between user
+    rating activity and average rating.
+
+    The average rating decreases from approximately 3.99 stars
+    for the least active users to 3.88 stars for the most active
+    users, a difference of only 0.11 stars.
+
+    Therefore, although more active users tend to assign
+    slightly lower ratings, rating activity alone does not
+    strongly explain differences in users' rating behavior.
+    """)
+    
+    
+# Page 5: Publication year
 elif page == "Publication year":
 
     st.title("Publication year")
@@ -295,9 +408,6 @@ elif page == "Publication year":
     else:
         pearson_value = "N/A"
         spearman_value = "N/A"
-
-
-
 
 
     # Display correlations for the selected period
