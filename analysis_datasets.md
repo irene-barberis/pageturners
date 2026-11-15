@@ -386,7 +386,7 @@ This visualization helps identify differences between books that may not be imme
 ### Data export
 A reduced dataset containing only the variables required by the Streamlit dashboard is exported to `data/books_for_app.csv`.
 
-This reduces unnecessary data loading and simplifies the application, while preserving all the information needed for the three research questions.
+This reduces unnecessary data loading and simplifies the application, while preserving the information required for the book-level analyses in the Streamlit dashboard.
 
 ### Conclusion
 Positive evaluations dominate the dataset, with **73.31% of ratings receiving 4 or 5 stars**.
@@ -442,6 +442,23 @@ The scatterplot shows no strong relationship between the number of ratings per u
 ![Average rating by user activity group](figures/average_rating_by_activity_group.png)
 
 The line chart highlights a gradual decrease in average ratings across activity groups. However, the overall difference is small, and the restricted y-axis range makes the trend more visually noticeable.
+
+### Interactive Streamlit dashboard
+The Streamlit dashboard includes a dedicated **Reader behavior** page to explore the relationship between user rating activity and average rating.
+
+The dashboard displays:
+- Pearson and Spearman correlation coefficients.
+- A scatterplot of user rating activity versus average rating.
+- A summary table comparing the four user activity groups.
+- A line chart showing average ratings across activity groups.
+
+The activity group summary is exported from `04_reader_behavior.py` to `data/reader_activity_summary.csv` and loaded into the dashboard using `pd.read_csv()`.
+
+The summary table is displayed using `st.dataframe()`, allowing users to examine the group-level statistics before viewing their graphical representation.
+
+The dashboard also includes a note explaining that the restricted y-axis range in the activity group chart visually emphasizes relatively small differences.
+
+The results indicate a very weak negative association between user rating activity and average rating.
 
 ### Conclusion
 - More active users tend to assign slightly lower average ratings, but the relationship is very weak.
