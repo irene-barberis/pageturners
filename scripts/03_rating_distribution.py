@@ -1,5 +1,11 @@
-# RQ2 - Rating Distributions
-# How do readers' rating distributions differ across books?
+"""
+RQ2 - Rating distributions.
+
+Analyze how rating distributions differ across books
+by calculating star-rating percentages, examining the
+overall distribution, and creating static and interactive
+visualizations.
+"""
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -84,6 +90,17 @@ for i in range(1, 6):
         f"{i} stars: {overall_percentages[f'ratings_{i}']:.2f}%"
     )
 
+# Save overall rating distribution for the Streamlit dashboard
+overall_distribution = pd.DataFrame({
+    "stars": [1, 2, 3, 4, 5],
+    "percentage": overall_percentages.values
+})
+
+overall_distribution.to_csv(
+    "data/overall_rating_distribution.csv",
+    index=False
+)
+
 # Create a static bar chart of the overall distribution
 stars = [1, 2, 3, 4, 5]
 
@@ -109,42 +126,6 @@ plt.savefig(
 plt.close()
 
 
-# Rating distribution for an individual book
-
-# Select a book by its position in the dataset
-book = books.iloc[0]
-
-# Extract its percentage of ratings for each star
-percentages = [
-    book[f"pct_{i}_stars"] for i in stars
-]
-
-print("\nSelected book:")
-print(book["title"])
-print("Author:", book["authors"])
-print("Average rating:", book["average_rating"])
-
-# Create an interactive Plotly bar chart
-fig = px.bar(
-    x=stars,
-    y=percentages,
-    title=f"Rating Distribution - {book['title']}",
-    labels={
-        "x": "Star Rating",
-        "y": "Percentage of Ratings (%)"
-    }
-)
-
-# Improve the chart layout
-fig.update_layout(
-    xaxis=dict(tickmode="array", tickvals=stars),
-    yaxis=dict(range=[0, 100])
-)
-
-# Display the chart
-fig.show()
-
-
 # Export the data needed for the Streamlit application
 
 app_columns = [
@@ -164,19 +145,3 @@ books[app_columns].to_csv(
     "data/books_for_app.csv",
     index=False
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

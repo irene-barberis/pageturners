@@ -1,4 +1,13 @@
-# RQ3 - Publication Year and Ratings
+"""
+RQ4 - Publication year and ratings.
+
+Investigate the relationship between a book's original
+publication year and its average rating using Pearson
+and Spearman correlations.
+
+Explore rating patterns across publication years and
+decades through different visualizations.
+"""
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -162,10 +171,3 @@ plt.savefig(
 )
 
 plt.close()
-
-
-
-
-
-
-

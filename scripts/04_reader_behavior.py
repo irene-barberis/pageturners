@@ -1,3 +1,11 @@
+"""
+RQ3 - Reader behavior.
+
+Investigate whether more active readers tend to rate books
+differently by analyzing individual rating activity,
+calculating correlations, and comparing activity groups.
+"""
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -30,6 +38,17 @@ spearman_corr = user_stats["number_of_ratings"].corr(
 print("\nCorrelation between rating activity and average rating:")
 print(f"Pearson correlation: {pearson_corr:.3f}")
 print(f"Spearman correlation: {spearman_corr:.3f}")
+
+# Save correlation results for the Streamlit dashboard
+correlation_results = pd.DataFrame({
+    "method": ["Pearson", "Spearman"],
+    "correlation": [pearson_corr, spearman_corr]
+})
+
+correlation_results.to_csv(
+    "data/reader_behavior_correlations.csv",
+    index=False
+)
 
 # Scatterplot: user activity vs average rating
 plt.figure(figsize=(10, 6))

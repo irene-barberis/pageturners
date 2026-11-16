@@ -1,6 +1,10 @@
-# RQ1 - Popularity vs Appreciation
-# Analyze the relationship between the number of ratings
-# a book receives and its average rating.
+"""
+RQ1 - Popularity vs rating.
+
+Analyze the relationship between the number of ratings
+a book receives and its average rating using descriptive
+statistics, Pearson and Spearman correlations, and a scatter plot.
+"""
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -22,7 +26,29 @@ pearson_correlation = popularity_data[
 print("\nPearson correlation:")
 print(round(pearson_correlation, 3))
 
-# 3. Scatter plot
+# 3. Spearman correlation
+spearman_correlation = popularity_data[
+    "work_ratings_count"
+].corr(
+    popularity_data["average_rating"],
+    method="spearman"
+)
+
+print("\nSpearman correlation:")
+print(round(spearman_correlation, 3))
+
+# Save correlation results for the Streamlit dashboard
+correlation_results = pd.DataFrame({
+    "method": ["Pearson", "Spearman"],
+    "correlation": [pearson_correlation, spearman_correlation]
+})
+
+correlation_results.to_csv(
+    "data/popularity_correlations.csv",
+    index=False
+)
+
+# 4. Scatter plot
 plt.figure(figsize=(10, 6))
 
 plt.scatter(
@@ -44,13 +70,3 @@ plt.savefig(
 
 plt.close()
 
-# 4. Spearman correlation
-spearman_correlation = popularity_data[
-    "work_ratings_count"
-].corr(
-    popularity_data["average_rating"],
-    method="spearman"
-)
-
-print("\nSpearman correlation:")
-print(round(spearman_correlation, 3))

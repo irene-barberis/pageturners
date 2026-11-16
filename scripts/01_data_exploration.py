@@ -1,104 +1,67 @@
+"""
+Explore and validate the Goodbooks-10k datasets.
+
+The script examines dataset structures, missing values,
+relationships, duplicate records, and data anomalies.
+"""
+
 import pandas as pd
-print("Pandas imported successfully")
 
-# BOOKS DATASET EXPLORATION
-#read the books dataset and show the first 5 rows
+def explore_dataset(df, name):
+    """
+    Display basic information about a dataset.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Dataset to explore.
+    name : str
+        Name of the dataset.
+
+    Returns
+    -------
+    None
+    """
+    print(f"\n--- {name.upper()} DATASET ---")
+
+    print("\nFirst five rows:")
+    print(df.head())
+
+    print("\nDataset shape:")
+    print(df.shape)
+
+    print("\nColumn names:")
+    print(df.columns)
+
+    print("\nDataset information:")
+    df.info()
+
+    print("\nDescriptive statistics:")
+    print(df.describe())
+
+    print("\nMissing values:")
+    print(df.isnull().sum())
+    
+    
+# Load the datasets
 books = pd.read_csv("data/raw (dati_grezzi)/books.csv")
-print(books.head())
-
-#show the shape of the dataset (rows and columns)
-print(books.shape) #10000 rows and 23 columns
-
-#show all the columns in the dataset
-print(books.columns)
-
-#show the structure of the dataframe
-print(books.info())
-#show the summary statistics of the dataset
-print(books.describe())
-
-#show the number of missing values in each column
-print(books.isnull().sum())
-
-
-# RATINGS DATASET EXPLORATION
-#read the ratings dataset and show the first 5 rows
 ratings = pd.read_csv("data/raw (dati_grezzi)/ratings.csv")
-print(ratings.head())
-
-#show the shape of the dataset (rows and columns)
-print(ratings.shape) #10000 rows and 23 columns
-
-#show all the columns in the dataset
-print(ratings.columns)
-
-#show the structure of the dataframe
-print(ratings.info())
-#show the summary statistics of the dataset
-print(ratings.describe())
-
-#show the number of missing values in each column
-print(ratings.isnull().sum())
-
-
-# BOOK TAGS DATASET EXPLORATION
-#read the book_tags dataset and show the first 5 rows
 book_tags = pd.read_csv("data/raw (dati_grezzi)/book_tags.csv")
-print(book_tags.head())
-
-#show the shape of the dataset (rows and columns)
-print(book_tags.shape) #10000 rows and 23 columns
-
-#show all the columns in the dataset
-print(book_tags.columns)
-
-#show the structure of the dataframe
-print(book_tags.info())
-#show the summary statistics of the dataset
-print(book_tags.describe())
-
-#show the number of missing values in each column
-print(book_tags.isnull().sum())
-
-
-# TAGS DATASET EXPLORATION
-#read the tags dataset and show the first 5 rows
 tags = pd.read_csv("data/raw (dati_grezzi)/tags.csv")
-print(tags.head())
-
-#show the shape of the dataset (rows and columns)
-print(tags.shape) #10000 rows and 23 columns
-
-#show all the columns in the dataset
-print(tags.columns)
-
-#show the structure of the dataframe
-print(tags.info())
-#show the summary statistics of the dataset
-print(tags.describe())
-
-#show the number of missing values in each column
-print(tags.isnull().sum())
-
-
-# TO READ DATASET EXPLORATION
-#read the to_read dataset and show the first 5 rows
 to_read = pd.read_csv("data/raw (dati_grezzi)/to_read.csv")
-print(to_read.head())
 
-#show the shape of the dataset (rows and columns)
-print(to_read.shape) #10000 rows and 23 columns
 
-#show all the columns in the dataset
-print(to_read.columns)
+# Explore all datasets
+datasets = {
+    "books": books,
+    "ratings": ratings,
+    "book_tags": book_tags,
+    "tags": tags,
+    "to_read": to_read
+}
 
-#show the structure of the dataframe
-print(to_read.info())
-#show the summary statistics of the dataset
-print(to_read.describe())
-
-#show the number of missing values in each column
-print(to_read.isnull().sum())
+for name, df in datasets.items():
+    explore_dataset(df, name)
 
 
 # Checking dataset relationships (ratings and books)
@@ -201,11 +164,14 @@ print(duplicate_tags.sort_values(
 ))
 
 
-# 8. Initial data cleaning
+# Initial data cleaning
 
 # Remove fully duplicated rows from book_tags
 # Store the cleaned data in a new DataFrame
 book_tags_clean = book_tags.drop_duplicates()
+
+# Some book-tag combinations remain duplicated because
+# they have different count values.
 
 # Check the number of rows before and after removing duplicates
 print("Original rows:", len(book_tags))
@@ -253,7 +219,7 @@ print("Duplicate tag names:")
 print(tags["tag_name"].duplicated().sum())
 
 
-# 10. Handling missing values in books
+# Handling missing values in books
 
 # Select books with a missing publication year
 missing_year_books = books[
@@ -312,7 +278,7 @@ print(
 )
 
 
-# 11. Checking rating values
+# Checking rating values
 
 # Check the minimum and maximum average rating
 print("Minimum average rating:")
@@ -331,7 +297,7 @@ print("Books with invalid average ratings:")
 print(len(invalid_ratings))
 
 
-# 12. Checking ratings count
+# Checking ratings count
 
 # Check the minimum and maximum number of ratings
 print("Minimum ratings count:")
@@ -349,7 +315,7 @@ print("Books with zero or negative ratings:")
 print(len(invalid_ratings_count))
 
 
-# 13. Checking anomalous tag counts
+# Checking anomalous tag counts
 
 # Check the minimum and maximum tag count
 print("Minimum tag count:")
@@ -419,7 +385,7 @@ print("Negative values by rating category:")
 print((books[rating_columns] < 0).sum())
 
 
-# 15. Checking consistency of rating counts
+# Checking consistency of rating counts
 
 # Calculate the sum of ratings from 1 to 5 stars for each book
 books["total_star_ratings"] = books[
@@ -443,7 +409,7 @@ print(
 )
 
 
-# 16. Checking consistency with work-level rating counts
+# Checking consistency with work-level rating counts
 
 # Compare the sum of star ratings with work_ratings_count
 matching_work_ratings = (
@@ -457,9 +423,3 @@ print(matching_work_ratings.sum())
 # Count books with different values
 print("Books with different work rating counts:")
 print((~matching_work_ratings).sum())
-
-
-
-
-
-
