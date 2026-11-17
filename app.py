@@ -11,7 +11,7 @@ import plotly.express as px
 
 # Configure the Streamlit application
 st.set_page_config(
-    page_title="Page Turners",
+    page_title="📚 Page Turners",
     layout="wide"
 )
 
@@ -33,7 +33,7 @@ def load_data():
 books = load_data()
 
 # Sidebar navigation
-st.sidebar.title("Page Turners")
+st.sidebar.title("📚 Page Turners")
 
 page = st.sidebar.radio(
     "Explore",
@@ -49,7 +49,7 @@ page = st.sidebar.radio(
 # Page 1: Overview
 if page == "Overview":
 
-    st.title("Page Turners")
+    st.title("📚 Page Turners")
     st.subheader("What makes a book loved by readers?")
 
     st.write(
@@ -61,6 +61,8 @@ if page == "Overview":
 
     st.divider()
 
+    # Project Overview
+    st.subheader("Project summary")
 
     col1, col2, col3 = st.columns(3)
 
@@ -74,31 +76,81 @@ if page == "Overview":
 
     with col3:
         with st.container(border=True):
-            st.metric("Dataset", "Goodbooks-10k")
+            st.metric("Rating scale", "1-5 stars")
 
     
     # Research questions
     st.divider()
     st.subheader("Research questions")
 
-    col1, col2, col3, col4 = st.columns(4, gap="medium")
+    col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("**01 — Popularity & Ratings**")
-        st.write("Does a book's popularity relate to its average rating?")
+        with st.container(border=True):
+            st.markdown("**01 — Popularity & Ratings**")
+            st.write("Does a book's popularity relate to its average rating?")
+        with st.container(border=True):
+            st.markdown("**03 — Reader behavior**")
+            st.write("Do more active readers rate books differently?")
 
     with col2:
-        st.markdown("**02 — Rating distributions**")
-        st.write("How do readers' rating distributions differ across books?")
+        with st.container(border=True):
+            st.markdown("**02 — Rating distributions**")
+            st.write("How do readers' rating distributions differ across books?")
+        with st.container(border=True):
+            st.markdown("**04 — Publication year**")
+            st.write("Does publication year relate to average ratings?")
 
-    with col3:
-        st.markdown("**03 — Reader behavior**")
-        st.write("Do more active readers rate books differently?")
+# Main findings
+    st.divider()
+    st.subheader("Key findings")
 
-    with col4:
-        st.markdown("**04 — Publication year**")
-        st.write("Does publication year influence average ratings?")
-    
+    col1, col2 = st.columns(2)
+
+    with col1:
+        with st.container(border=True):
+            st.metric("Popularity correlation", "0.045")
+            st.caption("Pearson correlation: negligible relationshipbetween popularity and average rating.")
+
+        with st.container(border=True):
+            st.metric("Reader activity correlation", "-0.083")
+            st.caption("Pearson correlation: more active readers tend to give slightly lower ratings.")
+
+    with col2:
+        with st.container(border=True):
+            st.metric("Positive ratings", "73.31%")
+            st.caption("Share of ratings that are 4 or 5 stars.")
+
+        with st.container(border=True):
+            st.metric("Publication year correlation", "0.016")
+            st.caption("Overall Pearson correlation: no meaningful linear relationship with average rating.")
+
+    # Overall conclusion
+    st.divider()
+    st.subheader("📖 What makes a book loved by readers?")
+
+    st.markdown(
+        "The analysis suggests that **popularity does not necessarily "
+        "mean appreciation**. Although most ratings are positive, "
+        "neither the number of ratings a book receives nor its "
+        "publication year shows a strong association with average "
+        "ratings. Reader activity also shows only a weak relationship "
+        "with rating behavior."
+    )
+
+    st.markdown(
+        "Overall, none of the examined variables strongly explains "
+        "readers' appreciation on its own. Other factors, such as "
+        "genre, content, and individual preferences, may contribute "
+        "to appreciation, but they were not directly investigated "
+        "in this project."
+    )
+
+    st.caption(
+        "Note: The findings describe statistical associations, "
+        "not causal relationships."
+    )
+
     
 # Page 2: Popularity & Ratings
 elif page == "Popularity & Ratings":
@@ -115,7 +167,7 @@ elif page == "Popularity & Ratings":
     ].iloc[0]
     
     #page title and research question
-    st.title("Popularity & Ratings")
+    st.title("📊 Popularity & Ratings")
 
     st.write(
         "Is a book's popularity associated with its average rating?"
@@ -124,6 +176,7 @@ elif page == "Popularity & Ratings":
     st.divider()
 
     # Display correlation coefficients
+    st.subheader("Correlation analysis")
     col1, col2 = st.columns(2)
 
     with col1:
@@ -140,7 +193,7 @@ elif page == "Popularity & Ratings":
     # Display the scatter plot
     st.subheader("Popularity vs average rating")
 
-    col1, col2, col3 = st.columns([1, 5, 1])
+    col1, col2, col3 = st.columns([1, 4, 1])
     with col2:
         st.image(
             "figures/popularity_vs_rating.png",
@@ -148,18 +201,20 @@ elif page == "Popularity & Ratings":
         )
 
     # Display the main finding
+    st.divider()
+    st.subheader("Conclusions")
+
     st.markdown(
-        f"""
-        **Conclusions**
+        f"Both Pearson ({pearson_corr:.3f}) and Spearman "
+        f"({spearman_corr:.3f}) correlations are close to zero, "
+        "indicating a negligible association between the "
+        "number of ratings and average rating."
+    )
 
-        Both Pearson ({pearson_corr:.3f}) and Spearman ({spearman_corr:.3f})
-        correlations are close to zero.
-        This indicates a negligible relationship between the number
-        of ratings and average rating.
-
-        Therefore, more popular books do not necessarily receive
-        higher ratings.
-        """
+    st.markdown(
+        "**Being popular does not necessarily mean being loved.** "
+        "Books with more ratings do not consistently receive "
+        "higher average scores."
     )
 
 
@@ -177,7 +232,7 @@ elif page == "Rating distributions":
         "percentage"
     ].sum()
 
-    st.title("Rating distributions")
+    st.title("⭐ Rating distributions")
 
     st.write(
         "How do readers' rating distributions differ across books?"
@@ -200,12 +255,13 @@ elif page == "Rating distributions":
 
     books = books.sort_values("book_label")
 
+    # Create a dictionary for faster book selection
+    book_labels = dict(zip(books["book_id"], books["book_label"]))
+
     selected_id = st.selectbox(
         "Search by title or author:",
         options=books["book_id"].tolist(),
-        format_func=lambda book_id: books.loc[
-            books["book_id"] == book_id, "book_label"
-        ].iloc[0]
+        format_func=lambda book_id: book_labels[book_id]
     )
 
     selected_book = books[
@@ -214,14 +270,25 @@ elif page == "Rating distributions":
     
     
     # Selected book information
-    st.subheader(selected_book["title"])
+    with st.container(border=True):
+        
+        col1, col2 = st.columns([2, 1])
 
-    st.caption(selected_book["authors"])
+        with col1:
+            with st.container(border=True):
+                st.caption("Title")
+                st.markdown(f"#### {selected_book['title']}")
 
-    st.metric(
-        "Average rating",
-        f"{selected_book['average_rating']:.2f} / 5"
-    )
+                st.caption("Author")
+                st.markdown(f"#### {selected_book['authors']}")
+
+        with col2:
+            with st.container(border=True):
+                st.metric(
+                    "Average rating",
+                    f"{selected_book['average_rating']:.2f} / 5"
+                )
+
     
     
     # Rating distribution calculation
@@ -256,7 +323,7 @@ elif page == "Rating distributions":
 
     fig.update_layout(
         template="plotly_white",
-        height=400,
+        height=350,
         xaxis=dict(
             tickmode="array",
             tickvals=stars
@@ -277,13 +344,17 @@ elif page == "Rating distributions":
 
 
     # Conclusions
-    st.markdown(f"""
-    **Conclusions**
+    st.divider()
+    st.subheader("Conclusions")
+    
+    st.markdown(
+        f"Overall, **{positive_ratings_pct:.2f}% of ratings are "
+        "4 or 5 stars**, indicating a predominance of positive "
+        "evaluations. However, rating distributions vary across "
+        "individual books, showing that readers' opinions are "
+        "not equally distributed across all titles."
+    )
 
-    Overall, {positive_ratings_pct:.2f}% of ratings are 4 or 5 stars, indicating a predominance of positive evaluations. 
-    However, rating distributions vary across individual books, 
-    showing that readers' opinions are not equally distributed across all titles.
-    """)
 
     
 # Page 4: Reader behavior
@@ -300,7 +371,7 @@ elif page == "Reader behavior":
         correlations["method"] == "Spearman", "correlation"
     ].iloc[0]
 
-    st.title("Reader behavior")
+    st.title("👥 Reader behavior")
 
     st.write(
         "Do more active readers rate books differently?"
@@ -309,6 +380,8 @@ elif page == "Reader behavior":
     st.divider()
 
     # Display correlation coefficients
+    st.subheader("Correlation analysis") 
+    
     col1, col2 = st.columns(2)
 
     with col1:
@@ -358,7 +431,20 @@ elif page == "Reader behavior":
     st.dataframe(
         activity_summary,
         hide_index=True,
-        use_container_width=True
+        use_container_width=True,
+        column_config={
+            "activity_group": st.column_config.TextColumn(
+                "Activity group"
+            ),
+            "number_of_users": st.column_config.NumberColumn(
+                "Number of users",
+                format="%d"
+            ),
+            "mean_rating": st.column_config.NumberColumn(
+                "Average rating",
+                format="%.2f"
+            )
+        }
     )
 
     st.divider()
@@ -371,7 +457,7 @@ elif page == "Reader behavior":
         "rating activity, from least active to most active."
     )
 
-    col1, col2, col3 = st.columns([1, 5, 1])
+    col1, col2, col3 = st.columns([1, 3.5, 1])
 
     with col2:
         st.image(
@@ -386,28 +472,30 @@ elif page == "Reader behavior":
     
     st.divider()
 
-    # Conclusions
-    st.markdown(f"""
-    **Conclusions**
-
-    Both Pearson ({pearson_corr:.3f}) and Spearman ({spearman_corr:.3f}) correlations
-    indicate a very weak negative association between user
-    rating activity and average rating.
-
-    The average rating decreases from approximately 3.99 stars
-    for the least active users to 3.88 stars for the most active
-    users, a difference of only 0.11 stars.
-
-    Therefore, although more active users tend to assign
-    slightly lower ratings, rating activity alone does not
-    strongly explain differences in users' rating behavior.
-    """)
+    # Conclusions 
+    st.subheader("Conclusions")
     
-    
+    st.markdown(
+        f"Both Pearson ({pearson_corr:.3f}) and Spearman "
+        f"({spearman_corr:.3f}) correlations indicate a "
+        "**very weak negative association** between user "
+        "rating activity and average rating."
+    )
+
+    st.markdown(
+        "The average rating decreases from approximately "
+        "3.99 stars for the least active users to 3.88 stars "
+        "for the most active users, **a difference of only "
+        "0.11 stars**. Therefore, although more active users "
+        "tend to assign slightly lower ratings, rating "
+        "activity alone does not strongly explain differences "
+        "in users' rating behavior."
+    )
+
 # Page 5: Publication year
 elif page == "Publication year":
 
-    st.title("Publication year")
+    st.title("📅 Publication year")
 
     st.write(
         "Does publication year influence average ratings?"
@@ -522,20 +610,28 @@ elif page == "Publication year":
 
     fig.update_layout(
         template="plotly_white",
-        height=450
+        height=380
+    )
+    
+    col1, col2, col3 = st.columns([1, 5, 1])
+
+    with col2:
+        st.plotly_chart(fig, use_container_width=True)
+
+    # Conclusions
+    st.subheader("Conclusions")
+    
+    st.markdown(
+        f"For the selected publication period "
+        f"(**{year_range[0]}–{year_range[1]}**), "
+        f"the Pearson correlation is **{pearson_value}** "
+        f"and the Spearman correlation is **{spearman_value}**."
     )
 
-    st.plotly_chart(fig, use_container_width=True)
-
-
-    st.markdown("""
-    **Conclusions**
-
-    The correlation coefficients update according to the selected publication period.
-    Their values indicate the strength of the linear and monotonic associations
-    between publication year and average rating within that interval.
-
-    The overall analysis of the full dataset shows negligible correlations,
-    suggesting no clear general relationship between publication year
-    and average rating.
-    """)
+    st.markdown(
+        "The overall analysis of the full dataset shows "
+        "**negligible correlations** between publication year "
+        "and average rating. This suggests that publication "
+        "year alone does not strongly explain how readers "
+        "evaluate books."
+    )
