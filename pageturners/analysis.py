@@ -1,6 +1,3 @@
-
-"""Functions for analyzing the Goodbooks-10k datasets."""
-
 import pandas as pd 
 
 # RQ1 - POPULARITY VS RATING
@@ -8,7 +5,22 @@ import pandas as pd
 # using Pearson and Spearman correlation coefficients
 
 def popularity_correlations(books):
-    """Calculate Pearson and Spearman correlations."""
+    """
+    Calculate Pearson and Spearman correlations between book popularity
+    and average rating.
+
+    Parameters
+    ----------
+    books : pandas.DataFrame
+    Dataset containing 'work_ratings_count' and 'average_rating'.
+
+    Returns
+    -------
+    pearson : float
+        Pearson correlation coefficient.
+    spearman : float
+        Spearman correlation coefficient.
+    """
 
     pearson = books["work_ratings_count"].corr(
         books["average_rating"]
@@ -27,7 +39,20 @@ def popularity_correlations(books):
 # to understand how readers evaluate books across the dataset
 
 def overall_rating_distribution(books):
-    """Calculate the overall percentage of each star rating."""
+    """
+    Calculate the overall percentage of ratings from 1 to 5 stars.
+
+    Parameters
+    ----------
+    books : pandas.DataFrame
+    Dataset containing the columns 'ratings_1', 'ratings_2',
+    'ratings_3', 'ratings_4', and 'ratings_5'.
+
+    Returns
+    -------
+    overall_percentages : pandas.Series
+        Percentage of ratings for each star category.
+    """
 
     rating_columns = [
         "ratings_1",
@@ -50,12 +75,25 @@ def overall_rating_distribution(books):
     return overall_percentages
 
 
-
 # RQ3 - READER BEHAVIOR
 # Calculate the number of ratings and the average rating for each user
 
 def calculate_user_stats(ratings):
-    """Calculate rating activity and average rating for each user."""
+    """
+    Calculate the number of ratings and average rating for each user.
+
+    Parameters
+    ----------
+ratings : pandas.DataFrame
+    Dataset containing 'user_id' and 'rating'.
+
+    Returns
+    -------
+    user_stats : pandas.DataFrame
+        DataFrame containing each user's ID, number of ratings,
+        and average rating.
+    """
+
 
     # Group ratings by user and calculate individual statistics
     user_stats = ratings.groupby("user_id").agg(
@@ -67,12 +105,25 @@ def calculate_user_stats(ratings):
     return user_stats
 
 
-
 # Calculate the relationship between user activity and average rating
 # using Pearson and Spearman correlation coefficients
 
 def reader_behavior_correlations(user_stats):
-    """Calculate correlations between user activity and average rating."""
+    """
+    Calculate Pearson and Spearman correlations between user activity and average rating.
+
+    Parameters
+    ----------
+    user_stats : pandas.DataFrame
+        DataFrame containing each user's ID, 'number of ratings', and 'average rating' for each user.
+
+    Returns
+    -------
+    pearson : float
+        Pearson correlation coefficient.
+    spearman : float
+        Spearman correlation coefficient.
+    """
 
     # Calculate Pearson correlation
     pearson = user_stats["number_of_ratings"].corr(
@@ -90,13 +141,25 @@ def reader_behavior_correlations(user_stats):
     return pearson, spearman
 
 
-
 # READER ACTIVITY GROUPS
 # Divide users into four groups based on their rating activity
 # and compare the average ratings assigned by each group
 
 def calculate_activity_groups(user_stats):
-    """Calculate average ratings for four user activity groups."""
+    """
+    Calculate average ratings for four user activity groups.
+
+    Parameters
+    ----------
+    user_stats : pandas.DataFrame
+        DataFrame containing each user's ID, number of ratings, and average rating.
+
+    Returns
+    -------
+    activity_summary : pandas.DataFrame
+        DataFrame containing the activity group, number of users
+        and mean rating for each group.
+    """
 
     # Create a copy to avoid modifying the original DataFrame
     user_stats = user_stats.copy()
@@ -104,7 +167,7 @@ def calculate_activity_groups(user_stats):
     # Divide users into four groups based on rating activity
     user_stats["activity_group"] = pd.qcut(
         user_stats["number_of_ratings"],
-        q=4,
+        q=4, 
         labels=["Low", "Medium-low", "Medium-high", "High"]
     )
 
@@ -122,13 +185,30 @@ def calculate_activity_groups(user_stats):
     return activity_summary
 
 
-
 # RQ4 - PUBLICATION YEAR AND RATINGS
 # Analyze the relationship between a book's original publication
 # year and its average rating using Pearson and Spearman correlations
 
 def publication_year_correlations(books):
-    """Calculate correlations between publication year and average rating."""
+    """
+    Calculate Pearson and Spearman correlations between publication year and average rating.
+
+    Parameters
+    ----------
+    books : pandas.DataFrame
+        DataFrame containing 'original_publication_year' and 'average_rating'.
+
+    Returns
+    -------
+    pearson : float
+        Pearson correlation coefficient.
+    spearman : float
+        Spearman correlation coefficient.
+        
+    Notes
+    -----
+    Books with missing publication years are excluded.
+    """
 
     # Remove books with missing publication years
     books_with_year = books.dropna(
@@ -150,13 +230,26 @@ def publication_year_correlations(books):
     return pearson, spearman
 
 
-
 # RATINGS OVER TIME
 # Group books by publication year or decade and calculate
 # the average rating and number of books for each period
 
 def ratings_over_time(books, grouping="Year"):
-    """Calculate average ratings and book counts by year or decade."""
+    """
+    Calculate average ratings and book counts by year or decade.
+
+    Parameters
+    ----------
+    books : pandas.DataFrame
+        DataFrame containing 'book_id', 'original_publication_year', and 'average_rating'.
+    grouping : str, default "Year"
+        Type of grouping: 'Year' or 'Decade'.
+        
+    Returns
+    -------
+    summary : pandas.DataFrame
+        DataFrame containing the publication year/decade, average rating, and book count for each period.
+    """
 
     # Create a copy to avoid modifying the original DataFrame
     books = books.copy()

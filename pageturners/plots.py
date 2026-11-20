@@ -12,7 +12,27 @@ from pageturners.analysis import ratings_over_time
 # Use a logarithmic x-axis to better display differences in popularity
 
 def plot_popularity_vs_rating(books):
-    """Create a scatter plot of book popularity and average rating."""
+    """
+    Create a scatter plot of book popularity and average rating.
+
+    Each point represents a book, with the x-axis showing the number
+    of ratings (popularity) and the y-axis showing the average rating.
+
+    Parameters
+    ----------
+    books : pandas.DataFrame
+        Dataset containing 'work_ratings_count' and 'average_rating'.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        Scatter plot of book popularity versus average rating.
+
+    Notes
+    -----
+    The x-axis uses a logarithmic scale to better visualize books
+    with very different numbers of ratings.
+    """
 
     # Create a figure and an axes object
     # fig represents the entire figure, while ax represents the plotting area
@@ -46,7 +66,19 @@ def plot_popularity_vs_rating(books):
 # using a bar chart to understand how readers evaluate books
 
 def plot_overall_rating_distribution(overall_percentages):
-    """Create a bar chart showing the overall rating distribution."""
+    """
+    Create a bar chart showing the overall rating distribution.
+
+    Parameters
+    ----------
+    overall_percentages : pandas.Series
+        Series containing the percentage of ratings for each star level.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        Bar chart showing the percentage of each star rating.
+    """
 
     # Create a figure and an axes object
     # fig represents the entire figure, while ax represents the plotting area
@@ -78,7 +110,19 @@ def plot_overall_rating_distribution(overall_percentages):
 # Each point in the scatter plot represents one user
 
 def plot_reader_activity(user_stats):
-    """Create a scatter plot of reader activity and average rating."""
+    """
+    Create a scatter plot showing the relationship between reader activity and average rating.
+
+    Parameters
+    ----------
+    user_stats : pandas.DataFrame
+        DataFrame containing 'number_of_ratings' and 'average_rating' for each user.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        Scatter plot of reader activity versus average rating.
+    """
 
     # Create a figure and an axes object
     # fig represents the entire figure, while ax represents the plotting area
@@ -110,7 +154,24 @@ def plot_reader_activity(user_stats):
 # across groups with increasing levels of activity
 
 def plot_activity_groups(activity_summary):
-    """Create a line plot of average ratings by user activity group."""
+    """
+    Create a line plot showing the average rating across user activity group.
+
+    Parameters
+    ----------
+    activity_summary : pandas.DataFrame
+        DataFrame containing 'activity_group' and 'mean_rating' for each group.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        Line plot of average ratings for each user activity group.
+        
+        Notes
+    -----
+    The y-axis is restricted to the interval from 3.8 to 4.1
+    to highlight small differences between groups.
+    """
 
     # Create a figure and an axes object
     # fig represents the entire figure, while ax represents the plotting area
@@ -140,7 +201,6 @@ def plot_activity_groups(activity_summary):
     return fig
 
 
-
 # RQ4 - PUBLICATION YEAR VS AVERAGE RATING
 # Visualize the relationship between a book's original publication year
 # and its average rating using a scatter plot
@@ -148,7 +208,24 @@ def plot_activity_groups(activity_summary):
 # to avoid extremely old publication dates in the visualization
 
 def plot_publication_year_vs_rating(books):
-    """Create a scatter plot of publication year and average rating."""
+    """
+    Create a scatter plot of publication year and average book rating.
+
+    Parameters
+    ----------
+    books : pandas.DataFrame
+        DataFrame containing 'original_publication_year' and 'average_rating'.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        Scatter plot of publication year and average rating.
+    
+    Notes
+    -----
+    Books with missing publication years or publication years
+    before 1000 are excluded from the visualization.
+    """
 
     # Remove books with missing publication years
     books_with_year = books.dropna(
@@ -182,7 +259,6 @@ def plot_publication_year_vs_rating(books):
     return fig
 
 
-
 # AVERAGE RATING BY DECADE
 # Visualize how average book ratings change across publication decades
 # Use a bubble chart where each point represents one decade
@@ -190,7 +266,24 @@ def plot_publication_year_vs_rating(books):
 # Include only books published from 1800 onwards
 
 def plot_average_rating_by_decade(books):
-    """Create a bubble chart of average ratings by publication decade."""
+    """
+    Create a bubble chart of average ratings by publication decade.
+
+    Parameters
+    ----------
+    books : pandas.DataFrame
+        DataFrame containing 'original_publication_year' and 'average_rating'.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        Bubble chart of average ratings by decade.
+        
+        Notes
+    -----
+    Only books published from 1800 onwards are included.
+    Bubble sizes represent the number of books in each decade.
+    """
 
     # Remove books with missing publication years
     books_with_year = books.dropna(
@@ -228,7 +321,6 @@ def plot_average_rating_by_decade(books):
     return fig
 
 
-
 # AVERAGE RATING BY PUBLICATION YEAR
 # Visualize how average book ratings change over time
 # Calculate the average rating for each publication year
@@ -248,6 +340,11 @@ def plot_average_rating_by_year(books):
     -------
     fig : matplotlib.figure.Figure
         Figure showing the average rating for each publication year.
+        
+        Notes
+    -----
+    Only books published between 1980 and 2016 are included.
+    Books with missing publication years are excluded.
     """
 
     # Remove books with missing publication years
