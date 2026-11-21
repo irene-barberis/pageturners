@@ -104,7 +104,7 @@ The required Python libraries are listed in `requirements.txt`.
 ## Installation and usage
 Clone the repository:
 ```bash
-git clone https://github.com/irenebarberis04-gif/pageturners.git
+git clone https://github.com/irene-barberis/pageturners.git
 cd pageturners
 ```
 ### Dataset setup
