@@ -84,8 +84,8 @@ def calculate_user_stats(ratings):
 
     Parameters
     ----------
-ratings : pandas.DataFrame
-    Dataset containing 'user_id' and 'rating'.
+    ratings : pandas.DataFrame
+        Dataset containing 'user_id' and 'rating'.
 
     Returns
     -------
@@ -259,10 +259,13 @@ def ratings_over_time(books, grouping="Year"):
         books["period"] = books["original_publication_year"].astype(int)
 
     # Group books by publication decade
-    else:
+    elif grouping == "Decade":
         books["period"] = (
             books["original_publication_year"] // 10 * 10
         ).astype(int)
+        
+    else:
+        raise ValueError("Grouping must be 'Year' or 'Decade'.")
 
     # Calculate the average rating and number of books per period
     summary = books.groupby("period", as_index=False).agg(

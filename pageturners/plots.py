@@ -2,8 +2,6 @@
 """Functions for creating the Page Turners visualizations."""
 
 import matplotlib.pyplot as plt
-
-import matplotlib.pyplot as plt
 from pageturners.analysis import ratings_over_time
 
 # RQ1 - POPULARITY VS RATING
@@ -146,7 +144,6 @@ def plot_reader_activity(user_stats):
     return fig
 
 
-
 # AVERAGE RATING BY ACTIVITY GROUP
 # Compare the average ratings assigned by four groups of users
 # based on their rating activity: Low, Medium-low, Medium-high, and High
@@ -167,7 +164,7 @@ def plot_activity_groups(activity_summary):
     fig : matplotlib.figure.Figure
         Line plot of average ratings for each user activity group.
         
-        Notes
+    Notes
     -----
     The y-axis is restricted to the interval from 3.8 to 4.1
     to highlight small differences between groups.
@@ -279,7 +276,7 @@ def plot_average_rating_by_decade(books):
     fig : matplotlib.figure.Figure
         Bubble chart of average ratings by decade.
         
-        Notes
+    Notes
     -----
     Only books published from 1800 onwards are included.
     Bubble sizes represent the number of books in each decade.
@@ -341,7 +338,7 @@ def plot_average_rating_by_year(books):
     fig : matplotlib.figure.Figure
         Figure showing the average rating for each publication year.
         
-        Notes
+    Notes
     -----
     Only books published between 1980 and 2016 are included.
     Books with missing publication years are excluded.

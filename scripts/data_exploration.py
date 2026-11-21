@@ -30,9 +30,6 @@ def explore_dataset(df, name):
     print("\nDataset shape:")
     print(df.shape)
 
-    print("\nColumn names:")
-    print(df.columns)
-
     print("\nDataset information:")
     df.info()
 
@@ -190,19 +187,6 @@ remaining_duplicates = book_tags_clean[
 print(remaining_duplicates.sort_values(
     ["goodreads_book_id", "tag_id"]
 ))
-# the check is correct
-
-# Identify the names of tags with conflicting count values
-# Select the tag IDs associated with conflicting records
-conflicting_tag_ids = [22743, 15169]
-
-# Find the corresponding tag names in the tags dataset
-conflicting_tags = tags[
-    tags["tag_id"].isin(conflicting_tag_ids)
-]
-
-# Display the tag IDs and their names
-print(conflicting_tags[["tag_id", "tag_name"]])
 
 
 # Check for fully duplicated rows in the tags dataset
@@ -229,13 +213,6 @@ missing_year_books = books[
 # Count books with a missing publication year
 print("Books with missing publication year:")
 print(len(missing_year_books))
-
-# Display the titles and authors of these books
-print(
-    missing_year_books[
-        ["book_id", "title", "authors", "original_publication_year"]
-    ].to_string(index=False)
-)
 
 
 # Keep only books with a known publication year
@@ -356,16 +333,12 @@ book_tags_clean = book_tags_clean[
     book_tags_clean["count"] >= 0
 ].copy()
 
-# Check the number of remaining records
-print("Rows after removing negative counts:")
-print(len(book_tags_clean))
-
 # Verify that no negative counts remain
 print("Remaining negative counts:")
 print((book_tags_clean["count"] < 0).sum())
 
 
-# 14. Checking rating distribution counts
+# Checking rating distribution counts
 
 # Select the columns containing the number of ratings by star
 rating_columns = [
@@ -394,7 +367,7 @@ books["total_star_ratings"] = books[
 
 # Select books where the two rating totals are different
 inconsistent_ratings = books[
-    books["total_star_ratings"] != books["ratings_count"]
+    books["total_star_ratings"] != books["work_ratings_count"]
 ]
 
 # Count books with inconsistent rating totals
@@ -404,7 +377,7 @@ print(len(inconsistent_ratings))
 # Display the first 10 inconsistent records
 print(
     inconsistent_ratings[
-        ["title", "ratings_count", "total_star_ratings"]
+        ["title", "work_ratings_count", "total_star_ratings"]
     ].head(10).to_string(index=False)
 )
 
