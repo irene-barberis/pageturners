@@ -253,6 +253,9 @@ def ratings_over_time(books, grouping="Year"):
 
     # Create a copy to avoid modifying the original DataFrame
     books = books.copy()
+    
+    # Exclude books with missing publication years
+    books = books.dropna(subset=["original_publication_year"])
 
     # Group books by publication year
     if grouping == "Year":
