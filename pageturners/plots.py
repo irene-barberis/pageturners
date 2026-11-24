@@ -33,7 +33,6 @@ def plot_popularity_vs_rating(books):
     """
 
     # Create a figure and an axes object
-    # fig represents the entire figure, while ax represents the plotting area
     fig, ax = plt.subplots(figsize=(10, 6))
 
     # Create a scatter plot using the number of ratings on the x-axis
@@ -45,8 +44,7 @@ def plot_popularity_vs_rating(books):
         alpha=0.3
     )
 
-    # Apply a logarithmic scale to the x-axis
-    # This makes it easier to visualize books with very different rating counts
+    # Apply a logarithmic scale to the x-axis (better visualization)
     ax.set_xscale("log")
 
     # Add a title and labels to explain the variables
@@ -56,7 +54,6 @@ def plot_popularity_vs_rating(books):
 
     # Return the figure so it can be displayed or saved in another file
     return fig
-
 
 
 # RQ2 - OVERALL RATING DISTRIBUTION
@@ -79,7 +76,6 @@ def plot_overall_rating_distribution(overall_percentages):
     """
 
     # Create a figure and an axes object
-    # fig represents the entire figure, while ax represents the plotting area
     fig, ax = plt.subplots(figsize=(8, 5))
 
     # Create a bar chart with star ratings on the x-axis
@@ -105,7 +101,6 @@ def plot_overall_rating_distribution(overall_percentages):
 # RQ3 - READER ACTIVITY VS AVERAGE RATING
 # Visualize the relationship between the number of ratings
 # submitted by each user and their average rating
-# Each point in the scatter plot represents one user
 
 def plot_reader_activity(user_stats):
     """
@@ -123,12 +118,10 @@ def plot_reader_activity(user_stats):
     """
 
     # Create a figure and an axes object
-    # fig represents the entire figure, while ax represents the plotting area
     fig, ax = plt.subplots(figsize=(10, 6))
 
     # Create a scatter plot with the number of ratings on the x-axis
     # and the average rating assigned by each user on the y-axis
-    # alpha controls the transparency of the points
     ax.scatter(
         user_stats["number_of_ratings"],
         user_stats["average_rating"],
@@ -140,9 +133,9 @@ def plot_reader_activity(user_stats):
     ax.set_xlabel("Number of ratings per user")
     ax.set_ylabel("Average rating per user")
 
-    # Return the figure so it can be displayed or saved in another file
+    # Return the figure 
     return fig
-
+ 
 
 # AVERAGE RATING BY ACTIVITY GROUP
 # Compare the average ratings assigned by four groups of users
@@ -183,7 +176,6 @@ def plot_activity_groups(activity_summary):
     )
 
     # Set the y-axis limits to highlight small differences
-    # The narrow scale makes small differences more visible
     ax.set_ylim(3.8, 4.1)
 
     # Add a grid to make the values easier to compare
@@ -260,7 +252,6 @@ def plot_publication_year_vs_rating(books):
 # Visualize how average book ratings change across publication decades
 # Use a bubble chart where each point represents one decade
 # The size of each bubble represents the number of books in that decade
-# Include only books published from 1800 onwards
 
 def plot_average_rating_by_decade(books):
     """
