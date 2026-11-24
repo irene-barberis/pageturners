@@ -5,7 +5,7 @@ The script examines dataset structures, missing values,
 relationships, duplicate records, and data anomalies.
 """
 
-import pandas as pd
+from pageturners.data import load_dataset
 
 
 def explore_dataset(df, name):
@@ -42,11 +42,11 @@ def explore_dataset(df, name):
 
 
 # Load the datasets
-books = pd.read_csv("data/raw (dati_grezzi)/books.csv")
-ratings = pd.read_csv("data/raw (dati_grezzi)/ratings.csv")
-book_tags = pd.read_csv("data/raw (dati_grezzi)/book_tags.csv")
-tags = pd.read_csv("data/raw (dati_grezzi)/tags.csv")
-to_read = pd.read_csv("data/raw (dati_grezzi)/to_read.csv")
+books = load_dataset("books.csv")
+ratings = load_dataset("ratings.csv")
+book_tags = load_dataset("book_tags.csv")
+tags = load_dataset("tags.csv")
+to_read = load_dataset("to_read.csv")
 
 
 # Explore all datasets
