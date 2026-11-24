@@ -4,6 +4,7 @@
 
 import pandas as pd
 
+
 def load_dataset(filename):
     """
     Load a CSV file from the Goodbooks-10k raw data folder.
@@ -20,4 +21,3 @@ def load_dataset(filename):
     """
 
     return pd.read_csv("data/raw (dati_grezzi)/" + filename)
-

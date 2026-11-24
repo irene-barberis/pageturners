@@ -1,8 +1,9 @@
-import pandas as pd 
+import pandas as pd
 
 # RQ1 - POPULARITY VS RATING
 # Calculate the relationship between book popularity and average rating
 # using Pearson and Spearman correlation coefficients
+
 
 def popularity_correlations(books):
     """
@@ -22,13 +23,10 @@ def popularity_correlations(books):
         Spearman correlation coefficient.
     """
 
-    pearson = books["work_ratings_count"].corr(
-        books["average_rating"]
-    )
+    pearson = books["work_ratings_count"].corr(books["average_rating"])
 
     spearman = books["work_ratings_count"].corr(
-        books["average_rating"],
-        method="spearman"
+        books["average_rating"], method="spearman"
     )
 
     return pearson, spearman
@@ -37,6 +35,7 @@ def popularity_correlations(books):
 # RQ2 - RATING DISTRIBUTIONS
 # Calculate the overall distribution of ratings from 1 to 5 stars
 # to understand how readers evaluate books across the dataset
+
 
 def overall_rating_distribution(books):
     """
@@ -54,13 +53,7 @@ def overall_rating_distribution(books):
         Percentage of ratings for each star category.
     """
 
-    rating_columns = [
-        "ratings_1",
-        "ratings_2",
-        "ratings_3",
-        "ratings_4",
-        "ratings_5"
-    ]
+    rating_columns = ["ratings_1", "ratings_2", "ratings_3", "ratings_4", "ratings_5"]
 
     # Count all ratings for each star category across all books in the dataset
     overall_counts = books[rating_columns].sum()
@@ -78,6 +71,7 @@ def overall_rating_distribution(books):
 # RQ3 - READER BEHAVIOR
 # Calculate the number of ratings and the average rating for each user
 
+
 def calculate_user_stats(ratings):
     """
     Calculate the number of ratings and average rating for each user.
@@ -94,12 +88,12 @@ def calculate_user_stats(ratings):
         and average rating.
     """
 
-
     # Group ratings by user and calculate individual statistics
-    user_stats = ratings.groupby("user_id").agg(
-        number_of_ratings=("rating", "count"),
-        average_rating=("rating", "mean")
-    ).reset_index()
+    user_stats = (
+        ratings.groupby("user_id")
+        .agg(number_of_ratings=("rating", "count"), average_rating=("rating", "mean"))
+        .reset_index()
+    )
 
     # Return the user-level statistics
     return user_stats
@@ -107,6 +101,7 @@ def calculate_user_stats(ratings):
 
 # Calculate the relationship between user activity and average rating
 # using Pearson and Spearman correlation coefficients
+
 
 def reader_behavior_correlations(user_stats):
     """
@@ -127,14 +122,12 @@ def reader_behavior_correlations(user_stats):
 
     # Calculate Pearson correlation
     pearson = user_stats["number_of_ratings"].corr(
-        user_stats["average_rating"],
-        method="pearson"
+        user_stats["average_rating"], method="pearson"
     )
 
     # Calculate Spearman correlation
     spearman = user_stats["number_of_ratings"].corr(
-        user_stats["average_rating"],
-        method="spearman"
+        user_stats["average_rating"], method="spearman"
     )
 
     # Return both correlation coefficients
@@ -144,6 +137,7 @@ def reader_behavior_correlations(user_stats):
 # READER ACTIVITY GROUPS
 # Divide users into four groups based on their rating activity
 # and compare the average ratings assigned by each group
+
 
 def calculate_activity_groups(user_stats):
     """
@@ -167,16 +161,15 @@ def calculate_activity_groups(user_stats):
     # Divide users into four groups based on rating activity
     user_stats["activity_group"] = pd.qcut(
         user_stats["number_of_ratings"],
-        q=4, 
-        labels=["Low", "Medium-low", "Medium-high", "High"]
+        q=4,
+        labels=["Low", "Medium-low", "Medium-high", "High"],
     )
 
     # Calculate the number of users and mean rating for each group
     activity_summary = (
         user_stats.groupby("activity_group", observed=True)
         .agg(
-            number_of_users=("user_id", "count"),
-            mean_rating=("average_rating", "mean")
+            number_of_users=("user_id", "count"), mean_rating=("average_rating", "mean")
         )
         .reset_index()
     )
@@ -188,6 +181,7 @@ def calculate_activity_groups(user_stats):
 # RQ4 - PUBLICATION YEAR AND RATINGS
 # Analyze the relationship between a book's original publication
 # year and its average rating using Pearson and Spearman correlations
+
 
 def publication_year_correlations(books):
     """
@@ -204,16 +198,14 @@ def publication_year_correlations(books):
         Pearson correlation coefficient.
     spearman : float
         Spearman correlation coefficient.
-        
+
     Notes
     -----
     Books with missing publication years are excluded.
     """
 
     # Remove books with missing publication years
-    books_with_year = books.dropna(
-        subset=["original_publication_year"]
-    )
+    books_with_year = books.dropna(subset=["original_publication_year"])
 
     # Calculate Pearson correlation
     pearson = books_with_year["original_publication_year"].corr(
@@ -222,8 +214,7 @@ def publication_year_correlations(books):
 
     # Calculate Spearman correlation
     spearman = books_with_year["original_publication_year"].corr(
-        books_with_year["average_rating"],
-        method="spearman"
+        books_with_year["average_rating"], method="spearman"
     )
 
     # Return both correlation coefficients
@@ -233,6 +224,7 @@ def publication_year_correlations(books):
 # RATINGS OVER TIME
 # Group books by publication year or decade and calculate
 # the average rating and number of books for each period
+
 
 def ratings_over_time(books, grouping="Year"):
     """
@@ -244,7 +236,7 @@ def ratings_over_time(books, grouping="Year"):
         DataFrame containing 'book_id', 'original_publication_year', and 'average_rating'.
     grouping : str, default "Year"
         Type of grouping: 'Year' or 'Decade'.
-        
+
     Returns
     -------
     summary : pandas.DataFrame
@@ -253,7 +245,7 @@ def ratings_over_time(books, grouping="Year"):
 
     # Create a copy to avoid modifying the original DataFrame
     books = books.copy()
-    
+
     # Exclude books with missing publication years
     books = books.dropna(subset=["original_publication_year"])
 
@@ -263,17 +255,14 @@ def ratings_over_time(books, grouping="Year"):
 
     # Group books by publication decade
     elif grouping == "Decade":
-        books["period"] = (
-            books["original_publication_year"] // 10 * 10
-        ).astype(int)
-        
+        books["period"] = (books["original_publication_year"] // 10 * 10).astype(int)
+
     else:
         raise ValueError("Grouping must be 'Year' or 'Decade'.")
 
     # Calculate the average rating and number of books per period
     summary = books.groupby("period", as_index=False).agg(
-        average_rating=("average_rating", "mean"),
-        book_count=("book_id", "count")
+        average_rating=("average_rating", "mean"), book_count=("book_id", "count")
     )
 
     # Return the summary table
