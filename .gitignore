@@ -9,6 +9,14 @@ __pycache__/
 .venv/
 venv/
 
+# Ignore secrets
+.env
+
+# Ignore Ruff cache
+.ruff_cache/
+
 # Ignore system and editor files
 .DS_Store
+Thumbs.db
 .vscode/
+.idea/
