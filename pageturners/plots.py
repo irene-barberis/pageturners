@@ -38,18 +38,15 @@ def plot_popularity_vs_rating(books):
 
     # Create a scatter plot using the number of ratings on the x-axis
     # and the average rating on the y-axis
-    # alpha controls the transparency of the points
     ax.scatter(books["work_ratings_count"], books["average_rating"], alpha=0.3)
 
     # Apply a logarithmic scale to the x-axis (better visualization)
     ax.set_xscale("log")
 
-    # Add a title and labels to explain the variables
     ax.set_title("Popularity vs average rating")
     ax.set_xlabel("Number of ratings (log scale)")
     ax.set_ylabel("Average rating")
 
-    # Return the figure so it can be displayed or saved in another file
     return fig
 
 
@@ -80,15 +77,12 @@ def plot_overall_rating_distribution(overall_percentages):
     # and the corresponding percentages on the y-axis
     ax.bar([1, 2, 3, 4, 5], overall_percentages.values)
 
-    # Add a title and labels to explain the variables
     ax.set_title("Overall rating distribution")
     ax.set_xlabel("Star rating")
     ax.set_ylabel("Percentage of ratings (%)")
 
-    # Display all five star categories on the x-axis
     ax.set_xticks([1, 2, 3, 4, 5])
 
-    # Return the figure so it can be displayed or saved in another file
     return fig
 
 
@@ -119,12 +113,10 @@ def plot_reader_activity(user_stats):
     # and the average rating assigned by each user on the y-axis
     ax.scatter(user_stats["number_of_ratings"], user_stats["average_rating"], alpha=0.3)
 
-    # Add a title and labels to explain the variables
     ax.set_title("Reader activity vs average rating")
     ax.set_xlabel("Number of ratings per user")
     ax.set_ylabel("Average rating per user")
 
-    # Return the figure
     return fig
 
 
@@ -160,23 +152,18 @@ def plot_activity_groups(activity_summary):
     fig, ax = plt.subplots(figsize=(9, 5))
 
     # Create a line plot connecting the four activity groups
-    # Markers highlight the average rating of each group
     ax.plot(
         activity_summary["activity_group"], activity_summary["mean_rating"], marker="o"
     )
 
     # Set the y-axis limits to highlight small differences
     ax.set_ylim(3.8, 4.1)
-
-    # Add a grid to make the values easier to compare
     ax.grid(True, alpha=0.3)
 
-    # Add a title and labels to explain the variables
     ax.set_title("Average rating by user activity group")
     ax.set_xlabel("User activity group")
     ax.set_ylabel("Average rating")
 
-    # Return the figure so it can be displayed or saved in another file
     return fig
 
 
@@ -216,24 +203,20 @@ def plot_publication_year_vs_rating(books):
     ]
 
     # Create a figure and an axes object
-    # fig represents the entire figure, while ax represents the plotting area
     fig, ax = plt.subplots(figsize=(10, 6))
 
     # Create a scatter plot with publication year on the x-axis
-    # and average rating on the y-axis
-    # Each point represents one book
+    # and average rating on the y-axis (each point represents one book)
     ax.scatter(
         books_with_year["original_publication_year"],
         books_with_year["average_rating"],
         alpha=0.3,
     )
 
-    # Add a title and labels to explain the variables
     ax.set_title("Publication year vs average rating")
     ax.set_xlabel("Original publication year")
     ax.set_ylabel("Average rating")
 
-    # Return the figure so it can be displayed or saved in another file
     return fig
 
 
@@ -274,13 +257,10 @@ def plot_average_rating_by_decade(books):
     # Use the analysis function to calculate average ratings by decade
     decade_summary = ratings_over_time(books_with_year, grouping="Decade")
 
-    # Create a figure and an axes object
-    # fig represents the entire figure, while ax represents the plotting area
     fig, ax = plt.subplots(figsize=(10, 6))
 
     # Create a bubble chart with decades on the x-axis
     # and average ratings on the y-axis
-    # Bubble sizes represent the number of books in each decade
     ax.scatter(
         decade_summary["period"],
         decade_summary["average_rating"],
@@ -288,12 +268,10 @@ def plot_average_rating_by_decade(books):
         alpha=0.5,
     )
 
-    # Add a title and labels to explain the variables
     ax.set_title("Average rating by publication decade")
     ax.set_xlabel("Publication decade")
     ax.set_ylabel("Average rating")
 
-    # Return the figure so it can be displayed or saved in another file
     return fig
 
 
@@ -335,22 +313,15 @@ def plot_average_rating_by_year(books):
     # Use the analysis function to calculate average ratings by year
     year_summary = ratings_over_time(books_recent, grouping="Year")
 
-    # Create a figure and an axes object
-    # fig represents the entire figure, while ax represents the plotting area
     fig, ax = plt.subplots(figsize=(10, 6))
 
     # Create a line plot with publication years on the x-axis
     # and average ratings on the y-axis
-    # Markers highlight the average rating for each year
     ax.plot(year_summary["period"], year_summary["average_rating"], marker="o")
-
-    # Add a grid to make the values easier to compare
     ax.grid(True, alpha=0.3)
 
-    # Add a title and labels to explain the variables
     ax.set_title("Average rating by publication year")
     ax.set_xlabel("Original publication year")
     ax.set_ylabel("Average rating")
 
-    # Return the figure so it can be displayed or saved in another file
     return fig

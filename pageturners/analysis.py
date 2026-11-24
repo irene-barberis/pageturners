@@ -95,7 +95,6 @@ def calculate_user_stats(ratings):
         .reset_index()
     )
 
-    # Return the user-level statistics
     return user_stats
 
 
@@ -120,17 +119,14 @@ def reader_behavior_correlations(user_stats):
         Spearman correlation coefficient.
     """
 
-    # Calculate Pearson correlation
     pearson = user_stats["number_of_ratings"].corr(
         user_stats["average_rating"], method="pearson"
     )
 
-    # Calculate Spearman correlation
     spearman = user_stats["number_of_ratings"].corr(
         user_stats["average_rating"], method="spearman"
     )
 
-    # Return both correlation coefficients
     return pearson, spearman
 
 
@@ -174,7 +170,6 @@ def calculate_activity_groups(user_stats):
         .reset_index()
     )
 
-    # Return the summary table
     return activity_summary
 
 
@@ -207,17 +202,14 @@ def publication_year_correlations(books):
     # Remove books with missing publication years
     books_with_year = books.dropna(subset=["original_publication_year"])
 
-    # Calculate Pearson correlation
     pearson = books_with_year["original_publication_year"].corr(
         books_with_year["average_rating"]
     )
 
-    # Calculate Spearman correlation
     spearman = books_with_year["original_publication_year"].corr(
         books_with_year["average_rating"], method="spearman"
     )
 
-    # Return both correlation coefficients
     return pearson, spearman
 
 
@@ -265,5 +257,4 @@ def ratings_over_time(books, grouping="Year"):
         average_rating=("average_rating", "mean"), book_count=("book_id", "count")
     )
 
-    # Return the summary table
     return summary
