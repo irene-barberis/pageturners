@@ -68,6 +68,46 @@ def overall_rating_distribution(books):
     return overall_percentages
 
 
+def individual_rating_distribution(selected_book):
+    """
+    Calculate the percentage of ratings at each star level
+    for an individual book.
+
+    Parameters
+    ----------
+    selected_book : pandas.Series
+        Data containing the rating counts of the selected book.
+
+    Returns
+    -------
+    rating_distribution : pandas.DataFrame
+        DataFrame containing star levels and rating percentages.
+    """
+
+    stars = [1, 2, 3, 4, 5]
+
+    # Calculate the total number of ratings
+    total_ratings = 0
+
+    for i in stars:
+        total_ratings += selected_book[f"ratings_{i}"]
+
+    # Calculate the percentage for each star level
+    percentages = []
+
+    for i in stars:
+        percentage = selected_book[f"ratings_{i}"] / total_ratings * 100
+        percentages.append(percentage)
+
+    # Create a DataFrame containing the rating distribution
+    rating_distribution = pd.DataFrame({
+        "Stars": stars,
+        "Percentage": percentages,
+    })
+
+    return rating_distribution
+
+
 # RQ3 - READER BEHAVIOR
 # Calculate the number of ratings and the average rating for each user
 

@@ -86,6 +86,43 @@ def plot_overall_rating_distribution(overall_percentages):
     return fig
 
 
+def plot_individual_rating_distribution(rating_distribution, title):
+    """
+    Create a bar chart showing the rating distribution
+    of an individual book.
+
+    Parameters
+    ----------
+    rating_distribution : pandas.DataFrame
+        DataFrame containing star levels and rating percentages.
+    title : str
+        Title of the selected book.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure
+        Bar chart showing the individual rating distribution.
+    """
+
+    # Create a figure and an axes object
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    # Create a bar chart showing the rating percentages
+    ax.bar(
+        rating_distribution["Stars"],
+        rating_distribution["Percentage"]
+    )
+
+    ax.set_title(title)
+    ax.set_xlabel("Star rating")
+    ax.set_ylabel("Percentage of ratings (%)")
+
+    ax.set_xticks([1, 2, 3, 4, 5])
+    ax.set_ylim(0, 100)
+
+    return fig
+
+
 # RQ3 - READER ACTIVITY VS AVERAGE RATING
 # Visualize the relationship between the number of ratings
 # submitted by each user and their average rating

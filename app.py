@@ -10,7 +10,7 @@ import plotly.express as px
 import streamlit as st
 
 # Import analysis functions for the interactive publication year page
-from pageturners.analysis import publication_year_correlations, ratings_over_time
+from pageturners.analysis import individual_rating_distribution, publication_year_correlations, ratings_over_time
 
 # Configure the Streamlit application
 st.set_page_config(page_title="📚 Page Turners", layout="wide")
@@ -297,21 +297,7 @@ elif page == "Rating distributions":
     # Rating distribution calculation
     stars = [1, 2, 3, 4, 5]
 
-    total_ratings = 0
-
-    for i in stars:
-        total_ratings += selected_book[f"ratings_{i}"]
-
-    percentages = []
-
-    for i in stars:
-        percentage = selected_book[f"ratings_{i}"] / total_ratings * 100
-        percentages.append(percentage)
-
-    rating_distribution = pd.DataFrame({
-        "Stars": stars,
-        "Percentage": percentages
-    })
+    rating_distribution = individual_rating_distribution(selected_book)
 
     # Interactive rating distribution chart
     fig = px.bar(
