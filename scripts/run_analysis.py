@@ -137,7 +137,7 @@ def main():
     plt.close(fig)
 
     # Create a line plot showing average ratings by publication year
-    # Only books published between 1980 and 2016 are included
+    # Only books published between 1980 and 2017 are included
     fig = plot_average_rating_by_year(books)
     fig.savefig("figures/average_rating_by_year.png")
     plt.close(fig)

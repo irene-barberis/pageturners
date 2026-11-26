@@ -278,7 +278,7 @@ def plot_average_rating_by_decade(books):
 # AVERAGE RATING BY PUBLICATION YEAR
 # Visualize how average book ratings change over time
 # Calculate the average rating for each publication year
-# Include only books published between 1980 and 2016
+# Include only books published between 1980 and 2017
 
 
 def plot_average_rating_by_year(books):
@@ -298,16 +298,16 @@ def plot_average_rating_by_year(books):
 
     Notes
     -----
-    Only books published between 1980 and 2016 are included.
+    Only books published between 1980 and 2017 are included.
     Books with missing publication years are excluded.
     """
 
     # Remove books with missing publication years
     books_with_year = books.dropna(subset=["original_publication_year"])
 
-    # Keep books published between 1980 and 2016
+    # Keep books published between 1980 and 2017
     books_recent = books_with_year[
-        books_with_year["original_publication_year"].between(1980, 2016)
+        books_with_year["original_publication_year"].between(1980, 2017)
     ]
 
     # Use the analysis function to calculate average ratings by year

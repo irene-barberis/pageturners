@@ -477,11 +477,11 @@ For each decade, the analysis calculates:
 The bubble chart displays the average rating for each decade, with bubble size representing the number of books.
 Average ratings remain relatively stable, generally around 4 stars. Earlier decades contain fewer books, so their averages should be interpreted with caution.
 
-#### 3. Average rating by publication year (1980–2016)
+#### 3. Average rating by publication year (1980-2017)
 ![Average rating by publication year](figures/average_rating_by_year.png)
-A line chart illustrates the average rating for each publication year between 1980 and 2016.
+A line chart illustrates the average rating for each publication year between 1980 and 2017.
 For each year, the analysis calculates the mean of the books' average ratings and the number of books.
-The year 2017 is excluded from this visualization because it contains only 11 books, although it remains included in the correlation analysis.
+The year 2017 contains only 11 books. Therefore, its average rating should be interpreted with caution due to the limited number of observations.
 Some fluctuations are visible, but no consistent increasing or decreasing trend emerges.
 
 ### Interactive Streamlit dashboard

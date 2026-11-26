@@ -473,7 +473,7 @@ elif page == "Publication year":
 
     # Allow users to select the publication period
     year_range = st.slider(
-        "Publication period", min_value=1800, max_value=2017, value=(1980, 2016)
+        "Publication period", min_value=1800, max_value=2017, value=(1980, 2017)
     )
 
     # Filter books according to the selected period
@@ -482,7 +482,10 @@ elif page == "Publication year":
     ].copy()
 
     # Calculate correlations for the selected publication period
-    if filtered_books["original_publication_year"].nunique() > 1:
+    if (
+        filtered_books["original_publication_year"].nunique() > 1
+        and filtered_books["average_rating"].nunique() > 1
+    ):
         
         pearson_corr, spearman_corr = publication_year_correlations(filtered_books)
 
