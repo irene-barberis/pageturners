@@ -108,10 +108,7 @@ def plot_individual_rating_distribution(rating_distribution, title):
     fig, ax = plt.subplots(figsize=(8, 5))
 
     # Create a bar chart showing the rating percentages
-    ax.bar(
-        rating_distribution["Stars"],
-        rating_distribution["Percentage"]
-    )
+    ax.bar(rating_distribution["Stars"], rating_distribution["Percentage"])
 
     ax.set_title(title)
     ax.set_xlabel("Star rating")

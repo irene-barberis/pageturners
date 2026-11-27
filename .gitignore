@@ -15,6 +15,9 @@ venv/
 # Ignore Ruff cache
 .ruff_cache/
 
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
 # Ignore system and editor files
 .DS_Store
 Thumbs.db

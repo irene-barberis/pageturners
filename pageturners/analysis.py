@@ -100,10 +100,12 @@ def individual_rating_distribution(selected_book):
         percentages.append(percentage)
 
     # Create a DataFrame containing the rating distribution
-    rating_distribution = pd.DataFrame({
-        "Stars": stars,
-        "Percentage": percentages,
-    })
+    rating_distribution = pd.DataFrame(
+        {
+            "Stars": stars,
+            "Percentage": percentages,
+        }
+    )
 
     return rating_distribution
 

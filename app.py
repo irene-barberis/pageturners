@@ -10,7 +10,11 @@ import plotly.express as px
 import streamlit as st
 
 # Import analysis functions for the interactive publication year page
-from pageturners.analysis import individual_rating_distribution, publication_year_correlations, ratings_over_time
+from pageturners.analysis import (
+    individual_rating_distribution,
+    publication_year_correlations,
+    ratings_over_time,
+)
 
 # Configure the Streamlit application
 st.set_page_config(page_title="📚 Page Turners", layout="wide")
@@ -104,7 +108,7 @@ if page == "Overview":
             st.metric("Rating scale", "1-5 stars")
 
     st.divider()
-    
+
     # Research questions
     st.subheader("Research questions")
 
@@ -127,7 +131,7 @@ if page == "Overview":
             st.write("Does publication year relate to average ratings?")
 
     st.divider()
-    
+
     # Main findings
     st.subheader("Key findings")
 
@@ -158,7 +162,7 @@ if page == "Overview":
             )
 
     st.divider()
-    
+
     st.subheader("📖 What makes a book loved by readers?")
 
     st.markdown(
@@ -186,7 +190,6 @@ if page == "Overview":
 
 # Page 2: Popularity & Ratings
 elif page == "Popularity & Ratings":
-
     pearson_corr = popularity_pearson
 
     spearman_corr = popularity_results.loc[
@@ -221,7 +224,7 @@ elif page == "Popularity & Ratings":
         st.image("figures/popularity_vs_rating.png", width="stretch")
 
     st.divider()
-    
+
     st.subheader("Conclusions")
 
     st.markdown(
@@ -240,7 +243,6 @@ elif page == "Popularity & Ratings":
 
 # Page 3: Rating distributions
 elif page == "Rating distributions":
-    
     positive_ratings_pct = positive_ratings
 
     st.title("⭐ Rating distributions")
@@ -248,7 +250,7 @@ elif page == "Rating distributions":
     st.write("How do readers' rating distributions differ across books?")
 
     st.divider()
-    
+
     with st.container(border=True):
         st.metric("4–5 Star ratings", f"{positive_ratings_pct:.2f}%")
 
@@ -309,11 +311,11 @@ elif page == "Rating distributions":
     )
 
     fig.update_layout(
-    template="plotly_white",
-    height=350,
-    xaxis={"tickmode": "array", "tickvals": stars},
-    yaxis={"range": [0, 100]},
-    margin={"l": 20, "r": 20, "t": 20, "b": 20},
+        template="plotly_white",
+        height=350,
+        xaxis={"tickmode": "array", "tickvals": stars},
+        yaxis={"range": [0, 100]},
+        margin={"l": 20, "r": 20, "t": 20, "b": 20},
     )
 
     col1, col2, col3 = st.columns([1, 4, 1])
@@ -335,7 +337,6 @@ elif page == "Rating distributions":
 
 # Page 4: Reader behavior
 elif page == "Reader behavior":
-    
     pearson_corr = reader_pearson
 
     spearman_corr = reader_results.loc[
@@ -390,11 +391,13 @@ elif page == "Reader behavior":
     # Display activity group summary
     st.subheader("Activity group summary")
 
-    activity_table = activity_summary.rename(columns={
-        "activity_group": "Activity group",
-        "number_of_users": "Number of users",
-        "mean_rating": "Average rating",
-    })
+    activity_table = activity_summary.rename(
+        columns={
+            "activity_group": "Activity group",
+            "number_of_users": "Number of users",
+            "mean_rating": "Average rating",
+        }
+    )
 
     activity_table["Average rating"] = activity_table["Average rating"].round(2)
 
@@ -472,7 +475,6 @@ elif page == "Publication year":
         filtered_books["original_publication_year"].nunique() > 1
         and filtered_books["average_rating"].nunique() > 1
     ):
-        
         pearson_corr, spearman_corr = publication_year_correlations(filtered_books)
 
         pearson_value = f"{pearson_corr:.3f}"
